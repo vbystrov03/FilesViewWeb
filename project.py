@@ -3,7 +3,7 @@ import os
 
 app = Flask(__name__)
 
-base_folder_path = '/mnt/logs'
+base_folder_path = r'C:\Users\vbystrov\Documents\Galaktika'
 
 def is_directory(path):
     return os.path.isdir(path)
@@ -19,7 +19,10 @@ def index():
 
     html_content = '''
     <html>
-        <head><title>Логирование контейнеров</title></head>
+        <head><title>Логирование контейнеров</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+        
+        </head>
         <body>
             <h1>Доступные контейнеры</h1>
             <ul>
@@ -28,7 +31,7 @@ def index():
                         {% if file.is_directory %}
                             <a href="/folder/{{ file.name }}">{{ file.name }}</a>
                         {% else %}
-                            {{ file.name }}
+                            <a href="/files/{{ file.name }}">{{ file.name }}</a>
                         {% endif %}
                     </li>
                 {% endfor %}
@@ -50,7 +53,8 @@ def show_folder(folder_path):
 
     html_content = '''
     <html>
-        <head><title>Содержимое контейнера: {{ folder }}</title></head>
+        <head><title>Содержимое контейнера: {{ folder }}</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"></head>
         <body>
             <h1>Содержимое контейнера: {{ folder }}</h1>
             <ul>
